@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/airbnb-mcs/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/airbnb-mcs/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/airbnb-mcs",
+  "projects": {
+    "airbnb-mcs": {
+      "type": "application",
+      "root": "apps/airbnb-mcs",
+      "entryFile": "main",
+      "sourceRoot": "apps/airbnb-mcs/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/airbnb-mcs/tsconfig.app.json"
+      }
+    },
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "user-service": {
+      "type": "application",
+      "root": "apps/user-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/user-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/user-service/tsconfig.app.json"
+      }
+    }
+  }
+}
