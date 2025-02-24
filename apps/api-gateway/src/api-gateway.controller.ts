@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { ClientKafka } from '@nestjs/microservices';
 
 @Controller('users')
@@ -9,6 +9,7 @@ export class UserController {
 
   async onModuleInit() {
     this.kafkaClient.subscribeToResponseOf('get-users');
+    this.kafkaClient.subscribeToResponseOf('create-user');
     await this.kafkaClient.connect();
   }
 
@@ -16,5 +17,12 @@ export class UserController {
   getUsers() {
     console.log('API Gateway: Call get users');
     return this.kafkaClient.send('get-users', {});
+  }
+
+  @Post()
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async createUser(@Body() data) {
+    console.log('API Gateway: Call create user');
+    return this.kafkaClient.send('create-user', data);
   }
 }
