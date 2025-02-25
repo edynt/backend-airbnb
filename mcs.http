@@ -2,7 +2,7 @@ POST http://localhost:3000/users HTTP/1.1
 content-type: application/json
 
 {
-    "name": "triminhnguyen4",
+    "name": "triminhnguyen6",
     "email": "triminh.nguyen2098@1gmail.com",
     "age": 20
 }
