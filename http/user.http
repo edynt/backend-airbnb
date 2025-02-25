@@ -1,0 +1,15 @@
+POST http://localhost:3000/users/signup HTTP/1.1
+content-type: application/json
+
+{
+    "user_email": "triminh.nguyen2098@1gmail.com",
+    "user_password": "123456",
+    "user_first_name": "Tri",
+    "user_last_name": "Nguyen",
+    "user_phone": "0123456789"
+}
+
+
+###
+
+GET http://localhost:3000/users HTTP/1.1

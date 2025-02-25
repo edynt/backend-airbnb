@@ -22,8 +22,8 @@ model User {
   user_phone       String
   user_avatar      String?
   user_birthday    String?
-  user_status      Status
-  user_role        Role
+  user_status      Int                @default(0)
+  user_role        Role               @default(GUEST)
   user_created_at  DateTime           @default(now())
   user_updated_at  DateTime           @default(now())
   UserRefreshToken UserRefreshToken[]
@@ -34,12 +34,6 @@ model UserRefreshToken {
   user_uuid          String @db.ObjectId
   refresh_token_used String
   user               User   @relation(fields: [user_uuid], references: [user_uuid])
-}
-
-enum Status {
-  ACTIVE
-  INACTIVE
-  BANNED
 }
 
 enum Role {
