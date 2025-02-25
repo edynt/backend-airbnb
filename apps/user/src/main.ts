@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './user-service.module';
+import { AppModule } from './user.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AllExceptionsFilter } from './filters/all-exception.filter';
 
@@ -13,7 +13,7 @@ async function bootstrap() {
           brokers: ['localhost:9092'],
         },
         consumer: {
-          groupId: 'user-service-consumer',
+          groupId: 'user-consumer',
         },
       },
     },

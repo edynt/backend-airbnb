@@ -1,6 +1,6 @@
 import { BadRequestException, Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { UserServiceService } from './user-service.service';
+import { UserService } from './user.service';
 import { plainToInstance } from 'class-transformer';
 import { RegisterUserDto } from './dto/user.dto';
 import { ResponseDTO } from './dto/response.dto';
@@ -16,7 +16,7 @@ interface UserPayload {
 
 @Controller()
 export class UserController {
-  constructor(private readonly userService: UserServiceService) {}
+  constructor(private readonly userService: UserService) {}
 
   @MessagePattern('get-users')
   async getUsers() {

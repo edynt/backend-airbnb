@@ -19,7 +19,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/airbnb-mcs/test/jest-e2e.json",
-    "prisma:generate:user": "prisma generate --schema=apps/user-service/prisma/schema.prisma"
+    "prisma:generate:user": "prisma generate --schema=apps/user/prisma/schema.prisma"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
