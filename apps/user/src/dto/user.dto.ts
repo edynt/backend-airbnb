@@ -29,3 +29,13 @@ export class RegisterUserDto {
   @IsNotEmpty({ message: 'Phone number is required' })
   user_phone: string;
 }
+
+export class LoginUserDto {
+  @IsEmail({}, { message: 'Invalid email' })
+  @IsNotEmpty({ message: 'Email is required' })
+  @IsString({ message: 'Email must be a string' })
+  user_email: string;
+
+  @IsNotEmpty({ message: 'Password is required' })
+  user_password: string;
+}

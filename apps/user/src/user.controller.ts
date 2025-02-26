@@ -1,18 +1,9 @@
 import { BadRequestException, Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserService } from './user.service';
-import { plainToInstance } from 'class-transformer';
 import { RegisterUserDto } from './dto/user.dto';
 import { ResponseDTO } from './dto/response.dto';
-import { validate } from 'class-validator';
-
-interface UserPayload {
-  user_email: string;
-  user_password: string;
-  user_first_name: string;
-  user_last_name: string;
-  user_phone: string;
-}
+import { ValidationPipe } from './pipe/validation.pipe';
 
 @Controller()
 export class UserController {
@@ -25,21 +16,12 @@ export class UserController {
   }
 
   @MessagePattern('signup')
-  async createUser(@Payload() data: UserPayload) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    const userData: UserPayload = plainToInstance(RegisterUserDto, data);
-
-    const errors: any[] = await validate(userData);
-    if (errors.length > 0) {
-      throw new BadRequestException(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        Object.values(errors[0].constraints).join(', '),
-      );
-    }
-
+  async createUser(@Payload(new ValidationPipe()) data: RegisterUserDto) {
     try {
-      const user = await this.userService.createUser(userData);
+      const user = await this.userService.createUser(data);
       if (user) {
+        delete (user as { user_password?: string }).user_password;
+
         return new ResponseDTO(201, 'User created successfully', user);
       }
     } catch (error: any) {

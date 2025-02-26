@@ -20,6 +20,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = {
       statusCode: status,
       message: exception.message || 'Internal server error',
+      data: [],
     };
 
     return response;

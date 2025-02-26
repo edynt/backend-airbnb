@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
 import { User, Prisma } from '@prisma/client';
 
 @Injectable()
@@ -10,7 +11,25 @@ export class UserService {
     return this.prisma.user.findMany();
   }
 
-  createUser(data: Prisma.UserCreateInput) {
+  findUniqueUser(user_email: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        user_email,
+      },
+    });
+  }
+
+  async createUser(data: Prisma.UserCreateInput) {
+    const userExist = await this.findUniqueUser(data.user_email);
+    if (userExist) {
+      throw new BadRequestException('User already exist with this email!');
+    }
+
+    const saltRounds = parseInt(process.env.SALT_ROUNDS as string);
+    const passwordHash = await bcrypt.hash(data.user_password, saltRounds);
+
+    data.user_password = passwordHash;
+
     return this.prisma.user.create({
       data: {
         user_email: data.user_email,

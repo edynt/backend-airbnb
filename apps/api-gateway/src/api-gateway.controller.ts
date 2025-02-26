@@ -19,8 +19,12 @@ export class UserController {
   }
 
   @Post('/signup')
-  // eslint-disable-next-line @typescript-eslint/require-await
-  async createUser(@Body() data) {
+  createUser(@Body() data) {
     return this.kafkaClient.send('signup', data);
+  }
+
+  @Post('/login')
+  login(@Body() data) {
+    return this.kafkaClient.send('login', data);
   }
 }
